@@ -1,0 +1,167 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMzPxGiZ5OFH0HyEoXtwS18",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/manju9848/python-files/blob/main/task%209%20usecase\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 383
+        },
+        "id": "Kmbs63tM28aI",
+        "outputId": "9219c5a5-71f6-4eb4-8c2f-8d62a9d1b8db"
+      },
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "ModuleNotFoundError",
+          "evalue": "No module named 'mysql'",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mModuleNotFoundError\u001b[0m                       Traceback (most recent call last)",
+            "\u001b[0;32m/tmp/ipython-input-473931135.py\u001b[0m in \u001b[0;36m<cell line: 0>\u001b[0;34m()\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mtkinter\u001b[0m \u001b[0;32mas\u001b[0m \u001b[0mtk\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0;32mfrom\u001b[0m \u001b[0mtkinter\u001b[0m \u001b[0;32mimport\u001b[0m \u001b[0mttk\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mmessagebox\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 3\u001b[0;31m \u001b[0;32mimport\u001b[0m \u001b[0mmysql\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mconnector\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      4\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      5\u001b[0m \u001b[0;31m# Database Connection\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mModuleNotFoundError\u001b[0m: No module named 'mysql'",
+            "",
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0;32m\nNOTE: If your import is failing due to a missing package, you can\nmanually install dependencies using either !pip or !apt.\n\nTo view examples of installing some common dependencies, click the\n\"Open Examples\" button below.\n\u001b[0;31m---------------------------------------------------------------------------\u001b[0m\n"
+          ],
+          "errorDetails": {
+            "actions": [
+              {
+                "action": "open_url",
+                "actionText": "Open Examples",
+                "url": "/notebooks/snippets/importing_libraries.ipynb"
+              }
+            ]
+          }
+        }
+      ],
+      "source": [
+        "import tkinter as tk\n",
+        "from tkinter import ttk, messagebox\n",
+        "import mysql.connector\n",
+        "\n",
+        "# Database Connection\n",
+        "conn = mysql.connector.connect(\n",
+        "    host=\"localhost\",\n",
+        "    user=\"root\",\n",
+        "    password=\"yourpassword\",   # change this\n",
+        "    database=\"student_db\"\n",
+        ")\n",
+        "cursor = conn.cursor()\n",
+        "\n",
+        "cursor.execute(\"\"\"\n",
+        "CREATE TABLE IF NOT EXISTS students (\n",
+        "    id INT PRIMARY KEY,\n",
+        "    name VARCHAR(100),\n",
+        "    email VARCHAR(100)\n",
+        ")\n",
+        "\"\"\")\n",
+        "\n",
+        "# Tkinter GUI Window\n",
+        "root = tk.Tk()\n",
+        "root.title(\"Student Registration System\")\n",
+        "root.geometry(\"600x400\")\n",
+        "root.configure(bg=\"#e6f0ff\")\n",
+        "\n",
+        "# Labels and Entries\n",
+        "tk.Label(root, text=\"Student ID\").grid(row=0, column=0, padx=10, pady=10)\n",
+        "tk.Label(root, text=\"Name\").grid(row=1, column=0, padx=10, pady=10)\n",
+        "tk.Label(root, text=\"Email\").grid(row=2, column=0, padx=10, pady=10)\n",
+        "\n",
+        "id_entry = tk.Entry(root)\n",
+        "name_entry = tk.Entry(root)\n",
+        "email_entry = tk.Entry(root)\n",
+        "\n",
+        "id_entry.grid(row=0, column=1)\n",
+        "name_entry.grid(row=1, column=1)\n",
+        "email_entry.grid(row=2, column=1)\n",
+        "\n",
+        "# Treeview to display data\n",
+        "tree = ttk.Treeview(root, columns=(\"id\", \"name\", \"email\"), show='headings')\n",
+        "tree.heading(\"id\", text=\"Student ID\")\n",
+        "tree.heading(\"name\", text=\"Name\")\n",
+        "tree.heading(\"email\", text=\"Email\")\n",
+        "tree.grid(row=5, column=0, columnspan=3, padx=10, pady=10)\n",
+        "\n",
+        "# Functions\n",
+        "def show_data():\n",
+        "    for row in tree.get_children():\n",
+        "        tree.delete(row)\n",
+        "    cursor.execute(\"SELECT * FROM students\")\n",
+        "    for row in cursor.fetchall():\n",
+        "        tree.insert(\"\", tk.END, values=row)\n",
+        "\n",
+        "def add_student():\n",
+        "    try:\n",
+        "        cursor.execute(\"INSERT INTO students VALUES (%s,%s,%s)\",\n",
+        "                       (id_entry.get(), name_entry.get(), email_entry.get()))\n",
+        "        conn.commit()\n",
+        "        messagebox.showinfo(\"Success\", \"Record added successfully\")\n",
+        "        show_data()\n",
+        "    except:\n",
+        "        messagebox.showerror(\"Error\", \"Duplicate ID or Invalid Entry\")\n",
+        "\n",
+        "def delete_student():\n",
+        "    selected = tree.selection()\n",
+        "    if not selected:\n",
+        "        return\n",
+        "    student_id = tree.item(selected[0])['values'][0]\n",
+        "    cursor.execute(\"DELETE FROM students WHERE id=%s\", (student_id,))\n",
+        "    conn.commit()\n",
+        "    show_data()\n",
+        "    messagebox.showinfo(\"Deleted\", \"Record deleted successfully\")\n",
+        "\n",
+        "def update_student():\n",
+        "    selected = tree.selection()\n",
+        "    if not selected:\n",
+        "        return\n",
+        "    student_id = tree.item(selected[0])['values'][0]\n",
+        "    cursor.execute(\"UPDATE students SET name=%s, email=%s WHERE id=%s\",\n",
+        "                   (name_entry.get(), email_entry.get(), student_id))\n",
+        "    conn.commit()\n",
+        "    show_data()\n",
+        "    messagebox.showinfo(\"Updated\", \"Record updated successfully\")\n",
+        "\n",
+        "def clear_fields():\n",
+        "    id_entry.delete(0, tk.END)\n",
+        "    name_entry.delete(0, tk.END)\n",
+        "    email_entry.delete(0, tk.END)\n",
+        "\n",
+        "# Buttons\n",
+        "tk.Button(root, text=\"Add\", command=add_student, bg=\"#66cc66\").grid(row=3, column=0, pady=10)\n",
+        "tk.Button(root, text=\"Update\", command=update_student, bg=\"#ffcc00\").grid(row=3, column=1)\n",
+        "tk.Button(root, text=\"Delete\", command=delete_student, bg=\"#ff6666\").grid(row=3, column=2)\n",
+        "tk.Button(root, text=\"Clear\", command=clear_fields, bg=\"#99ccff\").grid(row=4, column=1)\n",
+        "\n",
+        "show_data()\n",
+        "root.mainloop()"
+      ]
+    }
+  ]
+}
